@@ -1,0 +1,134 @@
+.btn.btnBase {
+  position: relative;
+  padding: 0 24px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  color: #fff;
+  white-space: nowrap;
+
+  :global {
+  }
+
+  > *:not(:last-child) {
+    margin-right: 6px;
+  }
+}
+
+.btn.btn-disabled {
+  opacity: 0.38;
+  color: #ffffff !important;
+}
+
+.btn.btn-small {
+  height: 28px;
+  line-height: 28px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.btn.btn-middle {
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btn.btn-large {
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn.btn-outlined-primary {
+  color: #1c58cd !important;
+  border: 1px solid #1c58cd !important;
+}
+
+.btn.btn-nagetive-primary {
+  color: #a69ccf;
+  border: 1px solid #a69ccf;
+}
+
+.btn.btn-filled-primary {
+  color: #ffffff;
+  background: #1c58cd !important;
+}
+
+.btn.btn-filled-white {
+  color: #1b283c;
+  background: #f9fbff;
+}
+
+.btn.btn-filled-dialogPool {
+  color: #ffffff;
+  background: #4751be !important;
+}
+
+.btn.btn-filled-orange {
+  color: #ffffff;
+  background: #ff902d !important;
+}
+
+.btn.btn-filled-grey {
+  color: #373e4e;
+  background: #f0f3f9 !important;
+}
+
+.btn.btn-filled-rollprimary {
+  color: #ffffff;
+  background: #017aff !important;
+  border-radius: 70px;
+  font-family: SF Pro Text-Heavy, SF Pro Text;
+  font-weight: 800;
+
+  &.btn-middle {
+    font-size: 14px;
+  }
+}
+
+.btn.btn-filled-rolldark {
+  color: #ffffff;
+  background: #141523 !important;
+  border-radius: 70px;
+  font-family: SF Pro Text-Heavy, SF Pro Text;
+  font-weight: 800;
+
+  &.btn-middle {
+    font-size: 14px;
+  }
+}
+
+.btn.btn-fullWidth {
+  display: flex;
+  width: 100%;
+}
+
+.btn.float-left {
+  position: absolute;
+  left: 12px;
+}
+
+@mixin xbtnOrange {
+  border-radius: 2px;
+  color: #ffffff;
+  text-shadow: 0px 0px 2px #895e14;
+  background-size: 100% 100% !important;
+}
+
+@mixin xbtnPrimary {
+  border-radius: 2px;
+  color: #ffffff;
+  text-shadow: 0px 0px 2px #09567d;
+  background-size: 100% 100% !important;
+}
+
+@mixin xbtnGrey {
+  border-radius: 2px;
+  color: #ffffff;
+  text-shadow: 0px 0px 2px #5f5f5f;
+  background-size: 100% 100% !important;
+}

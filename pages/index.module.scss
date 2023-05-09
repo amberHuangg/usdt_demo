@@ -1,0 +1,71 @@
+.usdtDemo {
+  margin: 20px;
+}
+
+.container {
+  margin: 20px;
+
+  .containerTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1b283c;
+    text-align: center;
+  }
+
+  .checkOrder {
+    display: flex;
+    align-items: center;
+
+    & > div:nth-child(1) {
+    }
+  }
+
+  .input {
+    margin-top: 10px;
+
+    .inputTitle {
+      font-size: 13px;
+      color: #1b283c;
+    }
+
+    input {
+      padding-left: 10px;
+      margin-top: 5px;
+      height: 35px;
+      width: 100%;
+      background: #f0f3f9;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #1b283c;
+      font-weight: 500;
+    }
+
+    .input_extra {
+      margin-top: 5px;
+      text-align: right;
+      font-size: 12px;
+      color: #1b283c;
+    }
+  }
+
+  .detail {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 21px;
+    color: #1b283c;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    & > button:nth-child(2) {
+      margin-left: 20px;
+    }
+  }
+}

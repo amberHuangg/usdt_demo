@@ -1,0 +1,36 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+max_line_length = 100
+tab_width = 2
+ij_html_keep_blank_lines = 1
+
+[*.less]
+indent_size = 2
+
+[*.sass]
+indent_size = 2
+
+[*.scss]
+indent_size = 2
+
+[{*.ats, *.ts, *.tsx}]
+indent_size = 2
+tab_width = 2
+
+[{*.cjs, *.js}]
+indent_size = 2
+tab_width = 2
+
+[{*.har, *.jsb2, *.jsb3, *.json, .babelrc, .eslintrc, .exlintrc, .prettierrc, .stylelintrc, bowerrc, jest.config}]
+indent_size = 2
+
+[{*.htm, *.html, *.sht, *.shtm, *.shtml}]
+indent_size = 2
+max_line_length = 80
+tab_width = 2

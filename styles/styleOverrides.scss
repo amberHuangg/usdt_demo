@@ -1,0 +1,75 @@
+.SnackbarContainer-bottom {
+  bottom: 28px !important;
+}
+
+.SnackbarContent-root {
+  border-radius: 6px !important;
+  padding: 12px !important;
+  background: rgba(0, 0, 0, 0.78) !important;
+  width: 345px !important;
+
+  .SnackbarItem-message {
+    word-break: break-word;
+  }
+}
+
+.SnackbarItem-message {
+  font-size: 14px !important;
+
+  .MuiSvgIcon-root {
+    display: none;
+    font-size: 14px !important;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    background-size: 20px 20px !important;
+    margin-right: 12px;
+  }
+}
+
+.SnackbarItem-variantSuccess {
+  .SnackbarItem-message {
+    &::before {
+      background: transparent url('../public/icon/icon-snackbar-success.png') 0 0 no-repeat;
+    }
+  }
+}
+
+.SnackbarItem-variantError {
+  .SnackbarItem-message {
+    &::before {
+      background: transparent url('../public/icon/icon-snackbar-error.png') 0 0 no-repeat;
+    }
+  }
+}
+
+.SnackbarItem-variantWarning {
+  .SnackbarItem-message {
+    &::before {
+      background: transparent url('../public/icon/icon-snackbar-warning.png') 0 0 no-repeat;
+    }
+  }
+}
+
+// 去除输入框hover高亮样式
+.MuiOutlinedInput-notchedOutline {
+  border-color: #ffffff3b !important;
+}
+
+// 去除TabPanel的padding
+.MuiTabPanel-root {
+  padding: 0 !important;
+}
+
+.MuiSkeleton-root {
+  transform: none !important;
+}
+
+.grecaptcha-badge {
+  opacity: 0;
+}
