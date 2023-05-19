@@ -6,6 +6,7 @@ import useProSnackbar from '../utils/hooks/useProSnackbar'
 import md5 from 'md5'
 import { Base64 } from 'js-base64'
 import ProDialogV2 from '../components/ProDialog/ProDialogV2'
+import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -15,18 +16,21 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
 const UsdtDemoRecharge: FC = React.memo(() => {
   const { enqueueSnackbarError, enqueueSnackbarSuccess } = useProSnackbar()
+  const router = useRouter()
+  const queryAmount = router.query.amount as string
+  const queryCurrency = router.query.currency as string
 
-  const [exchangeId, setExchangeId] = useState('') //交易所ID
+  const [currency, setCurrency] = useState(queryCurrency || 'VND') //币种
   const [usdtRate, setUsdtRate] = useState(0)
-  const [mchId, setMchId] = useState('') //商户ID
+  const [mchId, setMchId] = useState('102349') //商户ID
   const [mchUid, setMchUid] = useState('') //商户的用户uid
   const [mchOrderId, setMchOrderId] = useState('') //商户的订单ID
   const [equipmentType, setEquipmentType] = useState('0') //访问类型
-  const [expectedAmount, setExpectedAmount] = useState('') //充值的额度
+  const [expectedAmount, setExpectedAmount] = useState(queryAmount || '') //充值的额度
   const [mchUrl, setMchUrl] = useState('') //回调地址
   const [showTypes, setShowTypes] = useState('') //支付类型
   const [attach, setAttach] = useState('') //回调地址附加参数
-  const [secretKey, setSecretKey] = useState('') //组合hash的秘钥
+  const [secretKey, setSecretKey] = useState('island') //组合hash的秘钥
 
   const [hashData, setHashData] = useState('--')
   const [base64Data, setBase64Data] = useState('--')
@@ -38,14 +42,13 @@ const UsdtDemoRecharge: FC = React.memo(() => {
   const [checkOrderLoading, setCheckOrderLoading] = useState(false)
 
   const rateFun = async () => {
-    if (exchangeId) {
-      const api = await fetch(`https://testapi.3games.io/property/public/exchange?exchange_id=${exchangeId}`, {
+    if (currency) {
+      const api = await fetch(`https://api.3games.io/property/public/exchange?currency=${currency}`, {
         method: 'GET',
       })
       const { code, data, msg } = await api.json()
       if (code === 200) {
-        console.log(data)
-        setUsdtRate(data.USD_price_ksdt)
+        setUsdtRate(data.from_usdt)
       } else {
         enqueueSnackbarError(msg)
       }
@@ -106,7 +109,7 @@ const UsdtDemoRecharge: FC = React.memo(() => {
 
     const md5Str = md5(hashStr)
     const totalParams = paramsStr + '&' + 'hash=' + md5Str
-    const rechargUrl = 'https://testapi.3games.io/mch/create_topup_order?' + totalParams
+    const rechargUrl = 'https://api.3games.io/mch/create_topup_order?' + totalParams
 
     const base64Data = JSON.stringify({
       ...params,
@@ -181,7 +184,7 @@ const UsdtDemoRecharge: FC = React.memo(() => {
 
     const md5Str = md5(hashStr)
     const totalParams = paramsStr + '&' + 'hash=' + md5Str
-    const rechargUrl = 'https://testapi.3games.io/mch/query_topup_order?' + totalParams
+    const rechargUrl = 'https://api.3games.io/mch/query_topup_order?' + totalParams
 
     const base64Data = JSON.stringify({
       ...params,
@@ -200,6 +203,7 @@ const UsdtDemoRecharge: FC = React.memo(() => {
           mch_order_id: mchOrderId,
           cp_para: Base64.encode(base64Data),
           hash: md5Str,
+          currency: currency,
         }),
       })
       const { code, data, msg } = await api.json()
@@ -222,18 +226,8 @@ const UsdtDemoRecharge: FC = React.memo(() => {
       <div className={styles.containerTitle}>充值</div>
 
       <div className={styles.input}>
-        <div className={styles.inputTitle}>交易所(exchange_id):</div>
-        <input value={exchangeId} onChange={(e) => setExchangeId(e.target.value)}/>
-      </div>
-      <div className={styles.detail}>
-        费率(1美元兑换Xusdt的值)：
-        <br/>
-        {usdtRate}
-      </div>
-      <div className={styles.btn}>
-        <ProButton fullWidth onClick={rateFun}>
-          查询费率
-        </ProButton>
+        <div className={styles.inputTitle}>币种(currency,目前可填VND、USD):</div>
+        <input value={currency} onChange={(e) => setCurrency(e.target.value)}/>
       </div>
       <div className={styles.input}>
         <div className={styles.inputTitle}>商户ID(mch_id):</div>
@@ -252,12 +246,8 @@ const UsdtDemoRecharge: FC = React.memo(() => {
         <input value={equipmentType} onChange={(e) => setEquipmentType(e.target.value)}/>
       </div>
       <div className={styles.input}>
-        <div className={styles.inputTitle}>充值的额度(expected_amount),单位是（10000/Usdt）:</div>
+        <div className={styles.inputTitle}>充值的额度(expected_amount):</div>
         <input value={expectedAmount} onChange={(e) => setExpectedAmount(e.target.value)}/>
-        {usdtRate > 0 && expectedAmount && (
-          <div
-            className={styles.input_extra}>相当于:{parseFloat(expectedAmount) / 10000 / usdtRate}美元</div>
-        )}
       </div>
       <div className={styles.input}>
         <div className={styles.inputTitle}>回调地址-非必填(mch_url):</div>

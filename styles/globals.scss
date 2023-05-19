@@ -182,3 +182,11 @@ input[type='number'] {
   filter: blur(40px);
   background: no-repeat center / 100%;
 }
+
+.icon-loading {
+  display: inline-flex;
+  height: 16px;
+  width: 16px;
+  background: transparent url('../public/icon/icon-loading.svg') 0 0 no-repeat;
+  background-size: 100%;
+}

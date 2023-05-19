@@ -6,6 +6,7 @@ import useProSnackbar from '../utils/hooks/useProSnackbar'
 import md5 from 'md5'
 import { Base64 } from 'js-base64'
 import ProDialogV2 from '../components/ProDialog/ProDialogV2'
+import { useRouter } from 'next/router'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -15,16 +16,20 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
 const UsdtDemoWithdraw: FC = React.memo(() => {
   const { enqueueSnackbarError, enqueueSnackbarSuccess } = useProSnackbar()
+  const router = useRouter()
+  const queryAmount = router.query.amount as string
+  const queryCurrency = router.query.currency as string
 
-  const [mchId, setMchId] = useState('') //商户ID
-  const [mchUid, setMchUid] = useState('') //商户UID
+  const [currency, setCurrency] = useState(queryCurrency || 'VND') //币种
+  const [mchId, setMchId] = useState('102349') //商户ID
+  const [mchUid, setMchUid] = useState('') //商户的用户uid
   const [mchOrderId, setMchOrderId] = useState('') //商户的订单ID
   const [payType, setPayType] = useState('62') //支付方式
-  const [amount, setAmount] = useState('') //支付金额
+  const [amount, setAmount] = useState(queryAmount || '') //支付金额
   const [notifyUrl, setNotifyUrl] = useState('') //通知商户代付结果地址
   const [account, setAccount] = useState('') //收款人账号
   const [attach, setAttach] = useState('') //回调地址附加参数
-  const [secretKey, setSecretKey] = useState('') //组合hash的秘钥
+  const [secretKey, setSecretKey] = useState('island') //组合hash的秘钥
 
   const [hashData, setHashData] = useState('--')
   const [base64Data, setBase64Data] = useState('--')
@@ -94,7 +99,7 @@ const UsdtDemoWithdraw: FC = React.memo(() => {
 
     const md5Str = md5(hashStr)
     const totalParams = paramsStr + '&' + 'hash=' + md5Str
-    const rechargUrl = 'https://testapi.3games.io/mch/create_payment_order?' + totalParams
+    const rechargUrl = 'https://api.3games.io/mch/create_payment_order?' + totalParams
 
     const base64Data = JSON.stringify({
       ...params,
@@ -172,7 +177,7 @@ const UsdtDemoWithdraw: FC = React.memo(() => {
 
     const md5Str = md5(hashStr)
     const totalParams = paramsStr + '&' + 'hash=' + md5Str
-    const rechargUrl = 'https://testapi.3games.io/mch/query_payment_order?' + totalParams
+    const rechargUrl = 'https://api.3games.io/mch/query_payment_order?' + totalParams
 
     const base64Data = JSON.stringify({
       ...params,
@@ -191,6 +196,7 @@ const UsdtDemoWithdraw: FC = React.memo(() => {
           mch_order_id: mchOrderId,
           cp_para: Base64.encode(base64Data),
           hash: md5Str,
+          currency: currency,
         }),
       })
       const { code, data, msg } = await api.json()
@@ -211,6 +217,10 @@ const UsdtDemoWithdraw: FC = React.memo(() => {
   return (
     <div className={styles.container}>
       <div className={styles.containerTitle}>代付</div>
+      <div className={styles.input}>
+        <div className={styles.inputTitle}>币种(currency,目前可填VND、USD):</div>
+        <input value={currency} onChange={(e) => setCurrency(e.target.value)}/>
+      </div>
       <div className={styles.input}>
         <div className={styles.inputTitle}>商户ID(mch_id):</div>
         <input value={mchId} onChange={(e) => setMchId(e.target.value)}/>

@@ -15,11 +15,11 @@ const UsdtDemo: FC = React.memo(() => {
 
   return (
     <div className={styles.usdtDemo}>
-      <ProButton fullWidth onClick={() => router.push('/recharge')}>
+      <ProButton fullWidth onClick={() => router.push('/rechargeList')}>
         充值
       </ProButton>
       <div style={{ marginTop: '0.3rem' }}>
-        <ProButton fullWidth onClick={() => router.push('/withdraw')}>
+        <ProButton fullWidth onClick={() => router.push('/withdrawList')}>
           代付
         </ProButton>
       </div>
